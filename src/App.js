@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './App.css'
+import Editor from './Editor'
+import Preview from './Preview'
+import placeholder from './placeholder'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class ToRender extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      markdown: placeholder
+    }
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange (e) {
+    this.setState({
+      markdown: e.target.value
+    })
+  }
+
+  render () {
+    return (
+      <div className='flex-container'>
+        <div className='editor-box'>
+          <Editor markdown={this.state.markdown} onChange={this.handleChange} />
+        </div>
+        <div className='preview-box'>
+          <Preview markdown={this.state.markdown} />
+        </div>
+      </div>
+    )
+  }
 }
 
-export default App;
+function App () {
+  return (
+    <div className='App'>
+      <ToRender />
+    </div>
+  )
+}
+
+export default App
